@@ -83,8 +83,6 @@ const Display: React.FC = () => {
   const operator = arith.operator;
   const isOperatorClicked = arith.isOperatorClicked;
   const selectedTheme = arith.selectedTheme;
-  const lenOfFirst = firstNum.length;
-  const lenOfSecond = secondNum.length;
 
   return (
     <DisplayCont theme={selectedTheme} firstnum={firstNum}>
