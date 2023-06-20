@@ -28,8 +28,8 @@ export interface IThemeType {
 }
 
 const initialState: IState = {
-  firstData: "0",
-  secondData: "0",
+  firstData: "",
+  secondData: "",
   isOperatorClicked: false,
   operator: null,
   theme: [
@@ -96,21 +96,35 @@ export const arithSlice = createSlice({
   initialState: initialState,
   reducers: {
     setFirst: (state, { payload }) => {
-      if (!state.isOperatorClicked && state.firstData !== "undefined") {
-        state.firstData === "0"
-          ? (state.firstData = payload)
-          : (state.firstData += payload);
+      if (!state.isOperatorClicked && state.firstData !== "undefined" && state.firstData !== "NaN") {
+          if(state.firstData === "0"){
+            if(payload !== "."){
+              state.firstData = payload
+            }else{
+              state.firstData += payload
+            }
+          }else if(state.firstData === "" && payload === "."){
+            state.firstData = "0.";
+          }else{
+            state.firstData += payload
+          }
       }
     },
     setSecond: (state, { payload }) => {
       if (state.isOperatorClicked) {
-        state.secondData === "0"
-          ? (state.secondData = payload)
-          : (state.secondData += payload);
+        if(state.secondData === "0"){
+          if(payload !== "."){
+            state.secondData = payload
+          }else{
+            state.secondData += payload
+          }
+        }else{
+          state.secondData += payload
+        }
       }
     },
     setIsOperatorClicked: (state, { payload }) => {
-      if (state.firstData !== "undefined" && state.firstData !== "") {
+      if (state.firstData !== "undefined" && state.firstData !== "NaN" && state.firstData !== "") {
         if (!state.isOperatorClicked) {
           state.isOperatorClicked = true;
         }
@@ -120,36 +134,38 @@ export const arithSlice = createSlice({
     //  things to consider
     // 1. zero division
     evaluate: (state) => {
-      let first = parseInt(state.firstData);
-      const second = parseInt(state.secondData);
+      let first = parseFloat(state.firstData);
+      const second = parseFloat(state.secondData);
       const operator = state.operator;
-      if (operator === "+") {
-        first += second;
-        state.firstData = first.toString();
-      } else if (operator === "-") {
-        first -= second;
-        state.firstData = first.toString();
-      } else if (operator === "x") {
-        first *= second;
-        state.firstData = first.toString();
-      } else if (operator === "/") {
-        if (second !== 0) {
-          first /= second;
+      if(!Number.isNaN(first) && !Number.isNaN(second)){
+        if (operator === "+") {
+          first += second;
+          state.firstData = first.toFixed(4).toString();
+        } else if (operator === "-") {
+          first -= second;
           state.firstData = first.toString();
-        } else {
-          state.firstData = "undefined";
+        } else if (operator === "x") {
+          first *= second;
+          state.firstData = first.toString();
+        } else if (operator === "/") {
+          if (second !== 0) {
+            first /= second;
+            state.firstData = first.toString();
+          } else {
+            state.firstData = "undefined";
+          }
         }
+        state.secondData = "";
+        state.isOperatorClicked = false;
       }
-      state.secondData = "0";
-      state.isOperatorClicked = false;
     },
     reset: (state) => {
-      state.firstData = "0";
-      state.secondData = "0";
+      state.firstData = "";
+      state.secondData = "";
       (state.operator = null), (state.isOperatorClicked = false);
     },
     del: (state) => {
-      if (state.firstData !== "undefined") {
+      if (state.firstData !== "undefined" && state.firstData !== "NaN") {
         if (state.isOperatorClicked) {
           const str = state.secondData.slice(0, -1);
           state.secondData = str;

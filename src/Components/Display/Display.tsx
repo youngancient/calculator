@@ -5,6 +5,7 @@ import { IThemeType } from "../../redux/arithSlice";
 
 export interface IDisplay {
   theme : IThemeType;
+  firstnum : string;
 }
 export const DisplayCont = styled.div<IDisplay>`
   margin-top: 2rem;
@@ -31,7 +32,7 @@ export const DisplayCont = styled.div<IDisplay>`
     height: 27px;
     margin-left: 4px;
     background:  ${props => (props.theme.displayTextColor)};
-    display: inline-block;
+    display: ${props => (props.firstnum === "undefined" || props.firstnum === "NaN") ? "none": "inline-block"};
     animation: cursor-blink 1.5s steps(2) infinite;
   }
 
@@ -43,8 +44,17 @@ export const DisplayCont = styled.div<IDisplay>`
     width: 100%;
     max-width : 100%;
     display: flex;
+    flex-direction : row;
     justify-content: right;
     align-items: center;
+    overflow : hidden;
+  }
+  h3{
+    overflow : scroll;
+    width : 400%;
+  }
+  ::-webkit-scrollbar {
+    display: none;
   }
   @media screen and (min-width: 728px) {
     h3 {
@@ -63,9 +73,9 @@ export const DisplayCont = styled.div<IDisplay>`
   }
 `;
 
-// I only hae 2 things left
-// 1. how to manage overflow of the result div
-// 2. theme and colors
+// I only hae 1 thing left
+// 1. how to manage overflow on the display screen
+
 const Display: React.FC = () => {
   const arith = useAppSelector((state: RootState) => state.arith);
   const firstNum = arith.firstData;
@@ -77,7 +87,7 @@ const Display: React.FC = () => {
   const lenOfSecond = secondNum.length;
 
   return (
-    <DisplayCont theme={selectedTheme}>
+    <DisplayCont theme={selectedTheme} firstnum={firstNum}>
       <div className="sign">
         {isOperatorClicked ? <h2>{operator}</h2> : <></>}
       </div>
