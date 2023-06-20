@@ -59,6 +59,7 @@ export const DisplayCont = styled.div<IDisplay>`
   @media screen and (min-width: 728px) {
     h3 {
       font-size: 2.8rem;
+      white-space : nowrap;
     }
     h3::after {
         content: "";
