@@ -7,8 +7,12 @@ import { useAppSelector } from "./redux/hooks";
 import { RootState } from "./redux/store";
 import { IThemeType } from "./redux/arithSlice";
 
-export const MainContainer = styled.div`
-  background: #fff;
+
+export interface IMainContainer{
+  theme : IThemeType;
+}
+export const MainContainer = styled.div<IMainContainer>`
+  background: ${ props => (props.theme.bgColor)};
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -33,9 +37,9 @@ export const InnerContainer = styled.div`
 `;
 
 function App() {
-  const {theme} = useAppSelector((state: RootState) => state.arith);
+  const {selectedTheme} = useAppSelector((state: RootState) => state.arith);
   return (
-    <MainContainer>
+    <MainContainer theme={selectedTheme}>
       <InnerContainer>
         <Header />
         <Display />

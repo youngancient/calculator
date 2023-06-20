@@ -1,8 +1,10 @@
 import { styled } from '@mui/material/styles';
 import Switch from '@mui/material/Switch';
+import { IThemeType } from '../../redux/arithSlice';
 
 export interface IMuiSwitch {
   onClick?: React.MouseEventHandler;
+  selectedtheme ?: IThemeType;
 }
 export const MUISwitch = styled(Switch)<IMuiSwitch>(({ theme }) => ({
     width: 56,
@@ -22,8 +24,7 @@ export const MUISwitch = styled(Switch)<IMuiSwitch>(({ theme }) => ({
         },
         '& + .MuiSwitch-track': {
           opacity: 1,
-        //   backgroundColor: theme.palette.mode === 'dark' ? '#8796A5' : '#aab4be',
-          backgroundColor: theme.palette.mode === 'dark' ? '#8796A5' : '#aab4be',
+          backgroundColor: theme.palette.mode === 'dark' ? '#8796A5' : "hsl(223, 31%, 20%)" ,
         },
       },
     },
@@ -47,7 +48,7 @@ export const MUISwitch = styled(Switch)<IMuiSwitch>(({ theme }) => ({
     },
     '& .MuiSwitch-track': {
       opacity: 1,
-      backgroundColor: theme.palette.mode === 'dark' ? 'hsl(0, 5%, 81%)' : 'hsl(223, 31%, 20%)',
+      backgroundColor: theme.palette.mode === 'dark' ? 'hsl(223, 31%, 20%)' : 'hsl(0, 5%, 81%)',
       borderRadius: 20 / 2,
     },
   }));

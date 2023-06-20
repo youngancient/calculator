@@ -2,12 +2,18 @@ import { styled } from "styled-components";
 import Digit from "../Digit/Digit";
 import Operator from "../Operator/Operator";
 import EvalComp from "../EvalComp/EvalComp";
+import { IThemeType } from "../../redux/arithSlice";
+import { useAppSelector } from "../../redux/hooks";
+import { RootState } from "../../redux/store";
 
-export const InputContainerMain = styled.div`
+export interface IContainer {
+  theme : IThemeType;
+}
+export const InputContainerMain = styled.div<IContainer>`
     margin-top : 1.2rem;
     padding : 1.5rem;
-    border: 2px solid #000;
     width : 100%;
+    background : ${props => (props.theme.inputContainerBgColor)};
     display : flex;
     flex-direction  : column;
     gap: 1rem;
@@ -22,8 +28,10 @@ export const InputContainerMain = styled.div`
 `;
 
 const InputContainer: React.FC = () => {
+  const {selectedTheme} = useAppSelector((state: RootState) => state.arith);
+
   return (
-    <InputContainerMain>
+    <InputContainerMain theme={selectedTheme}>
         <div className="row">
           <Digit digit="7" />
           <Digit digit= "8" />

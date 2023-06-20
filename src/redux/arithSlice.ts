@@ -5,7 +5,8 @@ export interface IState {
   secondData: string;
   isOperatorClicked: boolean;
   operator: string | null;
-  theme: IThemeType [];
+  theme: IThemeType[];
+  selectedTheme: IThemeType;
 }
 export interface IThemeType {
   name: string;
@@ -14,9 +15,16 @@ export interface IThemeType {
   displayTextColor: string;
   inputContainerBgColor: string;
   digitBgColor: string;
+  digitHoverBgColor: string;
   resetBtnColor: string;
+  keyShadow: string;
+  equalBtnKeyShadow: string;
+  resetBtnKeyShadow: string;
   equalBtnColor: string;
-  selected : boolean;
+  textColor: string;
+  resetBtnHover: string;
+  equalBtnHover: string;
+  selected: boolean;
 }
 
 const initialState: IState = {
@@ -26,28 +34,60 @@ const initialState: IState = {
   operator: null,
   theme: [
     {
-      name : "dark",
+      name: "dark",
       bgColor: "hsl(222, 26%, 31%)",
-      displayColor: "",
-      displayTextColor: "",
-      inputContainerBgColor: "",
-      digitBgColor: "",
-      resetBtnColor: "",
-      equalBtnColor: "",
-      selected : false,
+      displayColor: "hsl(224, 36%, 15%)",
+      displayTextColor: "hsl(0, 0%, 100%)",
+      inputContainerBgColor: "hsl(224, 36%, 15%)",
+      digitBgColor: "hsl(30, 25%, 89%)",
+      digitHoverBgColor: "hsl(0, 0%, 100%)",
+      resetBtnColor: "hsl(225, 21%, 49%)",
+      equalBtnColor: "hsl(6, 63%, 50%)",
+      keyShadow: "hsl(28, 16%, 65%)",
+      equalBtnKeyShadow: "hsl(6, 70%, 34%)",
+      resetBtnKeyShadow: "hsl(224, 28%, 35%)",
+      textColor: "hsl(221, 14%, 31%)",
+      resetBtnHover: "hsl(225, 21%, 65%)",
+      equalBtnHover: "hsl(6, 63%, 65%)",
+      selected: false,
     },
     {
-      name : "light",
-      bgColor: "",
-      displayColor: "",
-      displayTextColor: "",
-      inputContainerBgColor: "",
-      digitBgColor: "",
-      resetBtnColor: "",
-      equalBtnColor: "",
-      selected : true,
+      name: "light",
+      bgColor: "hsl(0, 0%, 90%)",
+      displayColor: "hsl(0, 0%, 93%)",
+      displayTextColor: "hsl(60, 10%, 19%)",
+      inputContainerBgColor: "hsl(35, 11%, 81%)",
+      digitBgColor: "hsl(45, 7%, 89%)",
+      digitHoverBgColor: "hsl(0, 0%, 100%)",
+      resetBtnColor: "hsl(185, 42%, 37%)",
+      equalBtnColor: "hsl(25, 98%, 40%)",
+      keyShadow: "hsl(35, 11%, 61%)",
+      equalBtnKeyShadow: "hsl(25, 99%, 27%)",
+      resetBtnKeyShadow: "hsl(185, 58%, 25%)",
+      textColor: "hsl(224, 36%, 15%)",
+      resetBtnHover: "hsl(185, 42%, 50%)",
+      equalBtnHover: "hsl(25, 98%, 50%)",
+      selected: true,
     },
-  ]
+  ],
+  selectedTheme: {
+    name: "light",
+    bgColor: "hsl(0, 0%, 90%)",
+    displayColor: "hsl(0, 0%, 93%)",
+    displayTextColor: "hsl(60, 10%, 19%)",
+    inputContainerBgColor: "hsl(35, 11%, 81%)",
+    digitBgColor: "hsl(45, 7%, 89%)",
+    digitHoverBgColor: "hsl(0, 0%, 100%)",
+    resetBtnColor: "hsl(185, 42%, 37%)",
+    equalBtnColor: "hsl(25, 98%, 40%)",
+    equalBtnKeyShadow: "hsl(177, 92%, 70%)",
+    resetBtnKeyShadow: "hsl(285, 91%, 52%)",
+    keyShadow: "hsl(35, 11%, 61%)",
+    textColor: "hsl(224, 36%, 15%)",
+    resetBtnHover: "",
+    equalBtnHover: "",
+    selected: true,
+  },
 };
 
 // note: clicking equal to and reset should reset isOperatorclicked var
@@ -119,11 +159,14 @@ export const arithSlice = createSlice({
         }
       }
     },
-    switchTheme : (state) =>{
-      const newTheme = state.theme.map((ele)=>{
-        return {...ele, selected : !ele.selected}
+    switchTheme: (state) => {
+      const newTheme = state.theme.map((ele) => {
+        return { ...ele, selected: !ele.selected };
       });
       state.theme = newTheme;
+    },
+    setSelectedTheme: (state, { payload }) => {
+      state.selectedTheme = payload;
     },
   },
 });
@@ -135,8 +178,8 @@ export const {
   evaluate,
   reset,
   del,
-  switchTheme
+  switchTheme,
+  setSelectedTheme,
 } = arithSlice.actions;
-// export const arithSelector = (state: RootState) => state.arithReducer<>;
 
 export default arithSlice.reducer;

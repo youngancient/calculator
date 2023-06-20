@@ -1,16 +1,23 @@
 import { styled } from "styled-components";
-import { useAppDispatch } from "../../redux/hooks";
-import { setFirst, setSecond } from "../../redux/arithSlice";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { IThemeType, setFirst, setSecond } from "../../redux/arithSlice";
+import { RootState } from "../../redux/store";
 
 export interface IDigit {
   digit: number | string;
 }
 export interface IDigitEle {
-    onClick?: React.MouseEventHandler
+  onClick?: React.MouseEventHandler;
+  theme: IThemeType;
 }
 
 export const DigitEle = styled.button<IDigitEle>`
-  border: 2px solid #000;
+  background: ${(props) => props.theme.digitBgColor};
+  color: ${(props) => props.theme.textColor};
+  box-shadow: 0px 3.5px 1px 0px ${(props) => props.theme.keyShadow};
+  &:hover{
+    background: ${(props) => props.theme.digitHoverBgColor};
+  }
   height: 55px;
   width: 22%;
   display: flex;
@@ -32,12 +39,13 @@ export const DigitEle = styled.button<IDigitEle>`
 
 const Digit: React.FC<IDigit> = ({ digit }) => {
   const dispatch = useAppDispatch();
-  const handleClick =()=>{
+  const { selectedTheme } = useAppSelector((state: RootState) => state.arith);
+  const handleClick = () => {
     dispatch(setFirst(digit));
     dispatch(setSecond(digit));
-  }
+  };
   return (
-    <DigitEle onClick={handleClick}>
+    <DigitEle onClick={handleClick} theme={selectedTheme}>
       <h4>{digit}</h4>
     </DigitEle>
   );
