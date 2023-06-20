@@ -133,6 +133,7 @@ export const arithSlice = createSlice({
     },
     //  things to consider
     // 1. zero division
+    // 2. floating point precision
     evaluate: (state) => {
       let first = parseFloat(state.firstData);
       const second = parseFloat(state.secondData);
@@ -140,13 +141,13 @@ export const arithSlice = createSlice({
       if(!Number.isNaN(first) && !Number.isNaN(second)){
         if (operator === "+") {
           first += second;
-          state.firstData = first.toFixed(4).toString();
+          state.firstData = first.toString();
         } else if (operator === "-") {
           first -= second;
           state.firstData = first.toString();
         } else if (operator === "x") {
           first *= second;
-          state.firstData = first.toString();
+          state.firstData = first.toFixed(4);
         } else if (operator === "/") {
           if (second !== 0) {
             first /= second;
