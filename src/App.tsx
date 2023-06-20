@@ -3,6 +3,9 @@ import { styled } from "styled-components";
 import Header from "./Components/Header/Header";
 import Display from "./Components/Display/Display";
 import InputContainer from "./Components/InputContainer/InputContainer";
+import { useAppSelector } from "./redux/hooks";
+import { RootState } from "./redux/store";
+import { IThemeType } from "./redux/arithSlice";
 
 export const MainContainer = styled.div`
   background: #fff;
@@ -30,6 +33,7 @@ export const InnerContainer = styled.div`
 `;
 
 function App() {
+  const {theme} = useAppSelector((state: RootState) => state.arith);
   return (
     <MainContainer>
       <InnerContainer>

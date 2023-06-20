@@ -1,5 +1,8 @@
 import { styled } from "styled-components";
 import { MUISwitch } from "./Switch";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { RootState } from "../../redux/store";
+import { switchTheme } from "../../redux/arithSlice";
 
 export const HeaderCont = styled.header`
   display: flex;
@@ -27,6 +30,13 @@ export const HeaderCont = styled.header`
 `;
 
 const Header: React.FC = () => {
+  const {theme} = useAppSelector((state: RootState) => state.arith);
+  const selectedTheme = theme.find(ele => ele.selected === true);
+  console.log(selectedTheme);
+  const dispatch = useAppDispatch();
+  const handleTheme =()=>{
+    dispatch(switchTheme());
+  }
   return (
     <HeaderCont>
       <div className="name">
@@ -34,7 +44,7 @@ const Header: React.FC = () => {
       </div>
       <div className="theme-switch">
         <h4>THEME</h4>
-        <MUISwitch />
+        <MUISwitch onClick={handleTheme} />
         
       </div>
     </HeaderCont>

@@ -1,7 +1,10 @@
 import { styled } from '@mui/material/styles';
 import Switch from '@mui/material/Switch';
 
-export const MUISwitch = styled(Switch)(({ theme }) => ({
+export interface IMuiSwitch {
+  onClick?: React.MouseEventHandler;
+}
+export const MUISwitch = styled(Switch)<IMuiSwitch>(({ theme }) => ({
     width: 56,
     height: 32,
     padding: 7,
