@@ -44,7 +44,7 @@ Calculator
 To get a local copy of the code, clone it using git:
 
 ```
-git clone https://github.com/youngancient/multiform.git
+git clone https://github.com/youngancient/calculator.git
 
 cd calculator
 ```
