@@ -1,6 +1,6 @@
 
 <h1 align="center">
-  Muiltiform
+  Calculator
 </h1>
 
 <p align="center">
