@@ -12,6 +12,7 @@ export const HeaderCont = styled.header<IHeader>`
   display: flex;
   align-items : center;
   justify-content: space-between;
+  // padding-top: 2rem;
   width: 100%;
   color : ${props => (props.chosentheme?.displayTextColor)};
   .theme-switch{

@@ -14,11 +14,12 @@ export interface IMainContainer{
 export const MainContainer = styled.div<IMainContainer>`
   background: ${ props => (props.theme.bgColor)};
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 1.25rem 0rem 1.25rem 0rem;
 `;
 export const InnerContainer = styled.div`
   display: flex;
